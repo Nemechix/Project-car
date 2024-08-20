@@ -2,7 +2,15 @@ const carrito = document.querySelector("#carrito");
 const contenedorCarrito = document.querySelector("#lista-carrito tbody");
 const vaciarCarritoBtn = document.querySelector("#vaciar-carrito");
 const listaCursos = document.querySelector("#lista-cursos");
+const cantidadCarrito = document.querySelector("#carrito-cantidad");
+//console.log(cantidadCarrito)
 let articulosCarrito = [];
+let numCursosCarrito = articulosCarrito.reduce((acc,obj) => {
+  return acc + obj.cantidad
+}, 0)
+
+
+//console.log(articulosCarrito)
 
 cargarEventListeners();
 function cargarEventListeners() {
@@ -36,12 +44,25 @@ function eliminarCurso(e){
         articulosCarrito = articulosCarrito.filter( curso => curso.id !== cursoId)
 
         carritoHTML()
+        cantidadItemsCarrito()
     }
 }
 
 function vaciarCarrito(){
     articulosCarrito = []
     limpiarHTML()
+    cantidadItemsCarrito()
+}
+
+
+// Recoge la cantidad de cursos actualmente en el carrito
+
+function cantidadItemsCarrito(){
+    cantidadCarrito.innerHTML = articulosCarrito.reduce((acc,obj) => {
+      return acc + obj.cantidad
+    }, 0)
+    
+    
 }
 
 
@@ -72,12 +93,14 @@ function leerDatosCurso(curso) {
     articulosCarrito = [...cursos]
   } else {
     articulosCarrito = [...articulosCarrito, infoCurso];
-
   }
 
   // Agrega elementos al carrito
-  console.log(articulosCarrito);
+  //console.log(articulosCarrito);
+  cantidadItemsCarrito()
   carritoHTML();
+
+
 }
 
 // Muestra el carrito de compras en el HTML
@@ -128,3 +151,36 @@ function limpiarHTML() {
     contenedorCarrito.removeChild(contenedorCarrito.firstChild);
   }
 }
+
+
+
+// const cursosCarrito = [
+//   {
+//       "titulo": "Guitarra para Principiantes",
+//       "imagen": "http://127.0.0.1:5500/Project-car/img/curso3.jpg",
+//       "precio": "$15",
+//       "id": "3",
+//       "cantidad": 2
+//   },
+//   {
+//       "titulo": "Curso de Comida Vegetariana",
+//       "imagen": "http://127.0.0.1:5500/Project-car/img/curso2.jpg",
+//       "precio": "$15",
+//       "id": "2",
+//       "cantidad": 1
+//   },
+//   {
+//       "titulo": "HTML5, CSS3, JavaScript para Principiantes",
+//       "imagen": "http://127.0.0.1:5500/Project-car/img/curso1.jpg",
+//       "precio": "$15",
+//       "id": "1",
+//       "cantidad": 1
+//   }
+// ]
+
+
+// let result = cursosCarrito.reduce((acc,obj) => {
+//   return acc + obj.cantidad
+// }, 0)
+
+// console.log(result)
